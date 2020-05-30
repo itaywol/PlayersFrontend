@@ -1,9 +1,9 @@
-
 import gql from "graphql-tag"
-export const registerMutation = gql`
+
+export const registerPlayer = gql`
     mutation registerPlayer($data:registerPlayerInput!) {
         registerPlayer(data:$data) {
-            nickName
+            playerNickname: nickName
             authToken
             ready
         }
