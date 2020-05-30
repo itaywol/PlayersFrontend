@@ -1,1 +1,8 @@
-<p>player works!</p>
+<mat-card [ngClass]="{isCurrent:currentPlayer,isReady:player.ready && !currentPlayer,isNotReady:!player.ready && !currentPlayer}" class="playerContainer">
+    <mat-card-title>{{player.playerNickname}}</mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <p>Is ready? {{player.ready}}</p>
+        <button *ngIf="currentPlayer" [disabled]="currentPlayer && player.ready" (click)="becomeReady()" mat-raised-button matRipple>Ready!</button>
+    </mat-card-content>
+</mat-card>

@@ -9,3 +9,13 @@ export const registerPlayer = gql`
         }
     }
 `;
+
+export const updatePlayer = gql`
+    mutation updatePlayer($data:updatePlayerInput!) {
+        updatePlayer(data:$data) {
+            playerNickname: nickName
+            authToken
+            ready
+        }
+    }
+`;

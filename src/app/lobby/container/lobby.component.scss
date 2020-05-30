@@ -1,0 +1,22 @@
+.container {
+    display:flex;
+    width:50%;
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    background-color:#DFDFDF;
+    color:black;
+    padding:25px;
+    height:750px;
+    overflow: scroll;
+    overflow-x: hidden;
+    .your-profile{
+        flex:1;
+        padding:10px;
+    }
+    .lobby{
+        flex:1;
+        padding:10px;
+    }
+}

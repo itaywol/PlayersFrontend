@@ -1,4 +1,14 @@
-<p>{{currentPlayer.playerNickname}}</p>
-<ul>
-    <li *ngFor="let player of lobbyPlayers">{{player.playerNickname}}</li>
-</ul>
+<div class="container">
+    <div class="your-profile">
+        <h3>Its you!</h3>
+        <app-player *ngIf="currentPlayer" [player]="currentPlayer" [currentPlayer]="true"></app-player>
+    </div>
+    <hr />
+    <div class="lobby">
+        <h3>Other Players</h3>
+        <app-player *ngFor="let player of lobbyPlayers" [player]="player" [currentPlayer]="false"></app-player>
+    </div>
+</div>
+
+
+

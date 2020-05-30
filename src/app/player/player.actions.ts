@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import {PlayerDTO} from "./interfaces/player.interface"
+import { Player } from './interfaces/player.model';
 
 export enum PlayerActions {
     REQUEST_LOGIN = "playerActions:requestLogin",
@@ -17,4 +18,16 @@ export class LoginSuccess implements Action {
     type = PlayerActions.LOGIN_SUCCESS;
 
     constructor(public playerResponse:PlayerDTO) {}
+}
+
+export class HitReady implements Action {
+    type = PlayerActions.HIT_READY;
+
+    constructor(public player:Player){}
+}
+
+export class AckReady implements Action {
+    type = PlayerActions.ACK_READY;
+
+    constructor(public player:Player) {}
 }

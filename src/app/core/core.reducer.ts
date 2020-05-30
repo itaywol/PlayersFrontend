@@ -1,6 +1,6 @@
 import { Player } from '../player/interfaces/player.model'
 import {Action, createSelector, createFeatureSelector} from "@ngrx/store"
-import { PlayerActions, LoginSuccess } from '../player/player.actions';
+import { PlayerActions, LoginSuccess, AckReady } from '../player/player.actions';
 import { PlayerDTO } from '../player/interfaces/player.interface';
 import { LobbyScreenActions, GotPlayers } from '../lobby/lobby.actions';
 
@@ -21,6 +21,9 @@ export const coreReducer = (state:CoreState = {players:undefined,currentPlayer:u
     }
     case LobbyScreenActions.GotPlayers: {
       return {...state,players:(action as GotPlayers).players}
+    }
+    case PlayerActions.ACK_READY: {
+      return {...state,currentPlayer:(action as AckReady).player}
     }
   }
   return state

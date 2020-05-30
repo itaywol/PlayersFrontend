@@ -26,6 +26,9 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { LobbyModule } from './lobby/lobby.module';
+import { split } from 'apollo-link';
+import { getMainDefinition } from 'apollo-utilities';
+import {WebSocketLink} from "apollo-link-ws"
 
 
 @NgModule({
@@ -63,7 +66,11 @@ import { LobbyModule } from './lobby/lobby.module';
       useFactory: (httpLink: HttpLink) => {
         return {
           cache: new InMemoryCache(),
-          link: httpLink.create({ uri: environment.backendUrl }),
+          link: split(({query})=>{
+            const {kind,operation} = getMainDefinition(query);
+            return kind==="OperationDefinition" && operation==="subscription"
+            
+          },new WebSocketLink({uri:environment.backendUrl,options:{reconnect:true}}),httpLink.create({ uri: environment.backendUrl })),
         };
       },
       deps: [HttpLink],

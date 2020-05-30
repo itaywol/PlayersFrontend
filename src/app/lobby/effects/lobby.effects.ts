@@ -13,16 +13,16 @@ import { getCurrentPlayer } from 'src/app/core/core.reducer';
 @Injectable()
 export class LobbyScreenEffects {
 
-    constructor(private actions$:Actions,private lobbyService:LobbyService,private store:Store<any>) {
+    constructor(private actions$:Actions,private lobbyService:LobbyService,private store:Store<any>,private router:Router) {
         
     }
     @Effect()
     getPlayers$: Observable<Action> = this.actions$.pipe(ofType<GetPlayers>(LobbyScreenActions.GetPlayers),
     switchMap(()=>{
         return this.lobbyService.getPlayers();
-
     }),withLatestFrom(this.store.select(getCurrentPlayer)),map(([result,currentPlayer]) => {
         if(result.errors) throw new Error("Couldnt receive lobby players")
+        if(!currentPlayer) throw new Error("Couldnt get players as non loggedin user")
         return new GotPlayers(result.data.getPlayers.filter((player:Player)=>player.playerNickname!==currentPlayer.playerNickname));
     }))
 
