@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { getPlayers } from '../shared/graphql/lobby/lobby.gql';
-import { QueryOptions, ApolloQueryResult } from 'apollo-client';
+import { getPlayers, playerUpdated } from '../shared/graphql/lobby/lobby.gql';
+import { QueryOptions, ApolloQueryResult, SubscriptionOptions } from 'apollo-client';
 import { Observable } from 'rxjs';
 import { Player } from '../player/interfaces/player.model';
 
@@ -16,5 +16,12 @@ export class LobbyService {
       query:getPlayers
     }
     return this.apollo.query(queryOptions);
+  }
+
+  listenToPlayerUpdates() {
+    const subscriptionOptions:SubscriptionOptions = {
+      query:playerUpdated
+    }
+    return this.apollo.subscribe<{playerUpdated:Player}>(subscriptionOptions)
   }
 }

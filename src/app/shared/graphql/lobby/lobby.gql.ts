@@ -9,3 +9,13 @@ export const getPlayers = gql`
         }
     }
 `;
+
+export const playerUpdated = gql`
+    subscription playerUpdated {
+        playerUpdated {
+            playerNickname: nickName
+            authToken
+            ready
+        }
+    }
+`;

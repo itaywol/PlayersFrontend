@@ -27,7 +27,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { LobbyModule } from './lobby/lobby.module';
 import { split } from 'apollo-link';
-import { getMainDefinition } from 'apollo-utilities';
+import { getMainDefinition, getOperationDefinition } from 'apollo-utilities';
 import {WebSocketLink} from "apollo-link-ws"
 
 
@@ -67,10 +67,11 @@ import {WebSocketLink} from "apollo-link-ws"
         return {
           cache: new InMemoryCache(),
           link: split(({query})=>{
-            const {kind,operation} = getMainDefinition(query);
+            const {kind,operation} = getOperationDefinition(query);
+            
             return kind==="OperationDefinition" && operation==="subscription"
             
-          },new WebSocketLink({uri:environment.backendUrl,options:{reconnect:true}}),httpLink.create({ uri: environment.backendUrl })),
+          },new WebSocketLink({uri:environment.backendWsUrl,options:{reconnect:true}}),httpLink.create({ uri: environment.backendUrl })),
         };
       },
       deps: [HttpLink],

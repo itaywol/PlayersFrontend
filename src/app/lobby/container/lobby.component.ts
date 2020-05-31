@@ -1,3 +1,4 @@
+import { ListenToPlayerUpdates } from './../lobby.actions';
 import { Component, OnInit } from '@angular/core';
 import { Player } from '../../player/interfaces/player.model';
 import { Store } from '@ngrx/store';
@@ -21,6 +22,7 @@ export class LobbyComponent implements OnInit {
   ngOnInit(): void {
     
     this.store.dispatch(new GetPlayers());
+    this.store.dispatch(new ListenToPlayerUpdates());
 
     this.currentPlayer$.subscribe((player:Player) => {
       this.currentPlayer = player

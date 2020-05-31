@@ -37,6 +37,7 @@
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
     "rxjs": "~6.5.4",
+    "subscriptions-transport-ws": "^0.9.16",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },

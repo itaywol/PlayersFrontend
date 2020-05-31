@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   backendUrl: "http://localhost:4000",
+  backendWsUrl:"ws://localhost:4000/graphql",
   randomUserApi: "https://randomuser.me/api/"
 };
 
