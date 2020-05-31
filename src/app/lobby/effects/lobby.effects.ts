@@ -1,10 +1,10 @@
 import { PlayerUpdated, ListenToPlayerUpdates } from './../lobby.actions';
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { GetPlayers, LobbyScreenActions, GotPlayers } from '../lobby.actions';
-import { switchMap, map, tap, withLatestFrom } from 'rxjs/operators';
+import { switchMap, map, tap, withLatestFrom, catchError } from 'rxjs/operators';
 import { LobbyService } from '../lobby.service';
 import { ApolloQueryResult } from 'apollo-client';
 import { Player } from 'src/app/player/interfaces/player.model';
@@ -27,9 +27,11 @@ export class LobbyScreenEffects {
     }),
     withLatestFrom(this.store.select(getCurrentPlayer)),
     map(([result, currentPlayer]) => {
-      if (result.errors) throw new Error('Couldnt receive lobby players');
+      if (result.errors) return throwError(new Error('Failed to fetch lobby players'));
       if (!currentPlayer)
-        throw new Error('Couldnt get players as non loggedin user');
+        return throwError(
+          new Error('Couldnt fetch lobby players as not loggedin player')
+        );
       return new GotPlayers(
         result.data.getPlayers.filter(
           (player: Player) =>
@@ -46,8 +48,7 @@ export class LobbyScreenEffects {
       return this.lobbyService.listenToPlayerUpdates();
     }),
     map((subscriptionResult) => {
-        return new PlayerUpdated(subscriptionResult.data.playerUpdated);
+      return new PlayerUpdated(subscriptionResult.data.playerUpdated);
     })
   );
-
 }
