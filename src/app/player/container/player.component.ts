@@ -15,7 +15,6 @@ export class PlayerComponent implements OnInit {
   constructor(private store:Store<any>) { }
 
   ngOnInit(): void {
-    console.log(this.player)
   }
 
   becomeReady() {

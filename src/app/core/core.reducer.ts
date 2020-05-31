@@ -30,7 +30,6 @@ export const coreReducer = (state:CoreState = {players:undefined,currentPlayer:u
       const updatedPlayer:Player = (action as PlayerUpdated).player
       const currentState = Object.assign({},state);
       const findIndex:number = currentState.players.findIndex((value:Player)=>value.playerNickname===updatedPlayer.playerNickname)
-      console.log(findIndex)
       if(currentState.currentPlayer.playerNickname === updatedPlayer.playerNickname) return state;
 
       if(findIndex===-1)
