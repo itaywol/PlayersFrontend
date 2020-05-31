@@ -27,9 +27,9 @@ export class LobbyScreenEffects {
     }),
     withLatestFrom(this.store.select(getCurrentPlayer)),
     map(([result, currentPlayer]) => {
-      if (result.errors) return throwError(new Error('Failed to fetch lobby players'));
+      if (result.errors) throwError(new Error('Failed to fetch lobby players'));
       if (!currentPlayer)
-        return throwError(
+        throwError(
           new Error('Couldnt fetch lobby players as not loggedin player')
         );
       return new GotPlayers(
