@@ -1,4 +1,4 @@
-<mat-card [ngClass]="{isCurrent:currentPlayer,isReady:player.ready && !currentPlayer,isNotReady:!player.ready && !currentPlayer}" class="playerContainer">
+<mat-card *ngIf="player" [ngClass]="{isCurrent:currentPlayer,isReady:player.ready && !currentPlayer,isNotReady:!player.ready && !currentPlayer}" class="playerContainer">
     <mat-card-title>{{player.playerNickname}}</mat-card-title>
     <mat-divider></mat-divider>
     <mat-card-content>

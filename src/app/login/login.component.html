@@ -4,12 +4,12 @@
   <div class="menu">
     <mat-form-field>
       <mat-label>Nickname</mat-label>
-      <input [(ngModel)]="nickName" matInput class="nameSelection" minlength="4" maxlength="10" type="text" role="form"/>
+      <input [(ngModel)]="nickName" matInput class="nameSelection" id="nameInput" minlength="4" maxlength="10" type="text" role="form"/>
     </mat-form-field>
-    <p class="error" *ngIf="errorMessage">{{errorMessage | uppercase}}</p>
+    <p  class="error" *ngIf="errorMessage">{{errorMessage | uppercase}}</p>
     <mat-divider></mat-divider>
-    <h4 *ngIf="nickName">Selected nickname: {{nickName}}</h4>
-    <button mat-raised-button matRipple (click)="generateRandomName()" [disabled]="errorMessage.length>0" >Random</button>
-    <button mat-raised-button matRipple [disabled]="!nickName" (click)="invokeLogin()">Login</button>
+    <h4 id="nameSelected" *ngIf="nickName">Selected nickname: {{nickName}}</h4>
+    <button mat-raised-button matRipple (click)="generateRandomName()" [disabled]="errorMessage.length>0" id="generateRandomName">Random</button>
+    <button mat-raised-button matRipple [disabled]="!nickName" (click)="invokeLogin()" id="submit">Login</button>
   </div>
 </div>
