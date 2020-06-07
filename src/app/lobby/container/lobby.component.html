@@ -1,12 +1,12 @@
 <div class="container">
     <div class="your-profile">
         <h3>Its you!</h3>
-        <app-player *ngIf="currentPlayer" [player]="currentPlayer" [currentPlayer]="true"></app-player>
+        <app-player *ngIf="currentPlayer$ | async" [player]="currentPlayer$ | async" [currentPlayer]="true"></app-player>
     </div>
     <hr />
     <div class="lobby">
         <h3>Other Players</h3>
-        <app-player *ngFor="let player of lobbyPlayers" [player]="player" [currentPlayer]="false"></app-player>
+        <app-player *ngFor="let player of lobbyPlayers$ | async" [player]="player" [currentPlayer]="false"></app-player>
     </div>
 </div>
 

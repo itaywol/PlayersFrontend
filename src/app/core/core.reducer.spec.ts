@@ -1,4 +1,4 @@
-import { LobbyScreenActions, GotPlayers } from './../lobby/lobby.actions';
+import { LobbyScreenActions, GotPlayers, PlayerUpdated } from './../lobby/lobby.actions';
 import {
   PlayerActions,
   LoginAction,
@@ -67,4 +67,24 @@ describe('CoreReducer', () => {
     } as GotPlayers);
     expect(resultState.players).toEqual(expectedState.players)
   });
+
+  it("should update player state on ready",()=> {
+    const oldState: CoreState = {
+      currentPlayer: new Player('itay', 'token', false),
+      players: [new Player("other","not ready",false)],
+    };
+    const expectedState: CoreState = {
+      currentPlayer: new Player('itay', 'token', false),
+      players: [
+        new Player('other', 'not ready', true),
+      ],
+    };
+
+    const resultState = coreReducer(oldState, {
+      type: LobbyScreenActions.PlayerUpdated,
+      player: new Player("other","not ready",true)
+    } as PlayerUpdated);
+    
+    expect(resultState.players).toEqual(expectedState.players)
+  })
 });

@@ -24,13 +24,13 @@ export class PlayerEffects {
     }));
 
     @Effect({dispatch:false})
-    loginSuccess: Observable<Action> = this.actions$.pipe(ofType<LoginSuccess>(PlayerActions.LOGIN_SUCCESS),tap(()=>{
+    loginSuccess$: Observable<Action> = this.actions$.pipe(ofType<LoginSuccess>(PlayerActions.LOGIN_SUCCESS),tap(()=>{
         this.router.navigate(["/lobby"])
     }))
 
     @Effect()
     becomeReady$: Observable<Action> = this.actions$.pipe(ofType<HitReady>(PlayerActions.HIT_READY),switchMap((value:HitReady) => {
-        return this.playerService.updatePlayer(value.player.token,true);
+        return this.playerService.updatePlayer(value.player.authToken,true);
     }),map((value) => {
         return new AckReady(value.data.updatePlayer as Player)
     }))

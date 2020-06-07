@@ -14,6 +14,10 @@ FROM DEPS as development
 
 CMD ng serve --host 0.0.0.0 --port $PORT
 
+FROM development as testing
+
+CMD ng test
+
 FROM DEPS as production-build
 
 RUN ng build --output-path=dist --prod

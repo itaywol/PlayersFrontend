@@ -19,7 +19,7 @@ export class LobbyService {
   }
 
   listenToPlayerUpdates() {
-    const subscriptionOptions:SubscriptionOptions = {
+    const subscriptionOptions:SubscriptionOptions<{playerUpdated:Player}> = {
       query:playerUpdated
     }
     return this.apollo.subscribe<{playerUpdated:Player}>(subscriptionOptions)

@@ -3,6 +3,6 @@
     <mat-divider></mat-divider>
     <mat-card-content>
         <p>Is ready? {{player.ready}}</p>
-        <button *ngIf="currentPlayer" [disabled]="currentPlayer && player.ready" (click)="becomeReady()" mat-raised-button matRipple>Ready!</button>
+        <button class="ready-button" *ngIf="currentPlayer" [disabled]="currentPlayer && player.ready" (click)="becomeReady()" mat-raised-button matRipple>Ready!</button>
     </mat-card-content>
 </mat-card>

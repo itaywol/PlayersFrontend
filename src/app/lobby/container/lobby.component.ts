@@ -15,8 +15,6 @@ import { Router } from '@angular/router';
 export class LobbyComponent implements OnInit {
   currentPlayer$:Observable<Player> = this.store.select(getCurrentPlayer)
   lobbyPlayers$:Observable<Player[]> = this.store.select(getLobbyPlayers);
-  currentPlayer:Player;
-  lobbyPlayers:Player[] = [];
   constructor(private store:Store<any>,private router:Router) { }
 
   ngOnInit(): void {
@@ -25,12 +23,10 @@ export class LobbyComponent implements OnInit {
     this.store.dispatch(new ListenToPlayerUpdates());
 
     this.currentPlayer$.subscribe((player:Player) => {
-      this.currentPlayer = player
+      if(!player) this.router.navigate(["/main-menu"])
     },error=>this.router.navigate(["/main-menu"]))
     this.lobbyPlayers$.subscribe((players:Player[]) => {
-      this.lobbyPlayers = players
     })
-    if(!this.currentPlayer) this.router.navigate(["/main-menu"])
   }
 
 }

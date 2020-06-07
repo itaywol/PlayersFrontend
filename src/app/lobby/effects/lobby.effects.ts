@@ -1,7 +1,7 @@
 import { PlayerUpdated, ListenToPlayerUpdates } from './../lobby.actions';
 import { Injectable } from '@angular/core';
-import { Effect, Actions, ofType } from '@ngrx/effects';
-import { Observable, throwError } from 'rxjs';
+import { Effect, Actions, ofType, createEffect } from '@ngrx/effects';
+import { Observable, throwError, of } from 'rxjs';
 import { Action, Store } from '@ngrx/store';
 import { GetPlayers, LobbyScreenActions, GotPlayers } from '../lobby.actions';
 import { switchMap, map, tap, withLatestFrom, catchError } from 'rxjs/operators';
@@ -19,8 +19,8 @@ export class LobbyScreenEffects {
     private store: Store<any>,
     private router: Router
   ) {}
-  @Effect()
-  getPlayers$: Observable<Action> = this.actions$.pipe(
+  
+  getPlayers$ = createEffect(()=>this.actions$.pipe(
     ofType<GetPlayers>(LobbyScreenActions.GetPlayers),
     switchMap(() => {
       return this.lobbyService.getPlayers();
@@ -38,11 +38,10 @@ export class LobbyScreenEffects {
             player.playerNickname !== currentPlayer.playerNickname
         )
       );
-    })
-  );
+    }),catchError((err:any,caught:Observable<any>)=>of(new GotPlayers([])))
+  ));
 
-  @Effect()
-  listenPlayerUpdates$: Observable<Action> = this.actions$.pipe(
+  listenPlayerUpdates$ = createEffect(()=>this.actions$.pipe(
     ofType<ListenToPlayerUpdates>(LobbyScreenActions.listenToPlayerUpdates),
     switchMap(() => {
       return this.lobbyService.listenToPlayerUpdates();
@@ -50,5 +49,5 @@ export class LobbyScreenEffects {
     map((subscriptionResult) => {
       return new PlayerUpdated(subscriptionResult.data.playerUpdated);
     })
-  );
+  ));
 }

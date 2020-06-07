@@ -50,5 +50,5 @@ export const coreReducer = (state:CoreState = {players:undefined,currentPlayer:u
 }
 
 export const getCoreState = createFeatureSelector(coreStoreToken);
-export const getCurrentPlayer = createSelector(getCoreState,(state:CoreState)=>state.currentPlayer)
+export const getCurrentPlayer = createSelector(getCoreState,(state:CoreState)=> state.currentPlayer)
 export const getLobbyPlayers = createSelector(getCoreState,(state:CoreState) => state.players)
