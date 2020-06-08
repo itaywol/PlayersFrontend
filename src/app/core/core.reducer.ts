@@ -1,5 +1,5 @@
 import { throttle } from 'rxjs/operators';
-import { PlayerUpdated } from './../lobby/lobby.actions';
+import { PlayerUpdated, AllPlayersReady } from './../lobby/lobby.actions';
 import { Player } from '../player/interfaces/player.model'
 import {Action, createSelector, createFeatureSelector} from "@ngrx/store"
 import { PlayerActions, LoginSuccess, AckReady } from '../player/player.actions';
@@ -49,7 +49,7 @@ export const coreReducer = (state:CoreState = {players:undefined,currentPlayer:u
       }
     }
     case LobbyScreenActions.AllPlayersReady: {
-      return {...state,lobbyTimer:true}
+      return {...state,lobbyTimer:(action as AllPlayersReady).allPlayersReady}
     }
   }
   return state
@@ -64,5 +64,6 @@ export const getAllPlayers = createSelector(getCoreState,(state:CoreState)=>{
   allPlayers.push(state.currentPlayer)
   return allPlayers
   }
+  return [state.currentPlayer]
 })
 export const getTimerState = createSelector(getCoreState,(state:CoreState)=>state.lobbyTimer)

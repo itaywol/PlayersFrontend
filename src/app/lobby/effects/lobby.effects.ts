@@ -74,15 +74,23 @@ export class LobbyScreenEffects {
       ofType<PlayerUpdated>(LobbyScreenActions.PlayerUpdated),
       withLatestFrom(this.store.select(getAllPlayers)),
       map(([playerUpdated, allPlayers]) => {
-        if (allPlayers && allPlayers.length > 0) {
+        if (allPlayers && allPlayers.length > 0 ) {
+          allPlayers[allPlayers.findIndex(player => player.playerNickname===playerUpdated.player.playerNickname)] = playerUpdated.player
+          
           const allPlayersReady =
             allPlayers.filter((player) => player.ready === true).length ===
             allPlayers.length;
 
-          if (allPlayersReady) return new AllPlayersReady();
+            console.log(allPlayersReady)
+
+          if(allPlayers.length===1){
+            if(allPlayers[0].playerNickname===playerUpdated.player.playerNickname)
+            return new AllPlayersReady(true)
+          }
+
+          return new AllPlayersReady(allPlayersReady)
         }
-        if(playerUpdated.player.ready)
-        return new AllPlayersReady();
+
       })
     )
   );

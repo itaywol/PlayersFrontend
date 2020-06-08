@@ -43,5 +43,5 @@ export class PlayerUpdated implements Action {
 export class AllPlayersReady implements Action {
     type = LobbyScreenActions.AllPlayersReady
 
-    constructor() {}
+    constructor(public allPlayersReady:boolean) {}
 }
