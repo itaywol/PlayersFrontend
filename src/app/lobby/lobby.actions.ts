@@ -1,4 +1,5 @@
 
+
 import { Action } from '@ngrx/store';
 import { Player } from '../player/interfaces/player.model';
 
@@ -6,7 +7,8 @@ export enum LobbyScreenActions {
     GetPlayers = "lobbyScreen:getPlayers",
     GotPlayers = "lobbyScreen:gotPlayers",
     listenToPlayerUpdates = "lobbyScreen:listenPlayerUpdates",
-    PlayerUpdated = "lobbyScreen:playerUpdated"
+    PlayerUpdated = "lobbyScreen:playerUpdated",
+    AllPlayersReady = "lobbyScreen:allPlayersReady",
 }
 
 export class GetPlayers implements Action {
@@ -36,4 +38,10 @@ export class PlayerUpdated implements Action {
 
     constructor(public player:Player) {
     }
+}
+
+export class AllPlayersReady implements Action {
+    type = LobbyScreenActions.AllPlayersReady
+
+    constructor() {}
 }

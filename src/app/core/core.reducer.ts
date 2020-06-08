@@ -1,9 +1,11 @@
+import { throttle } from 'rxjs/operators';
 import { PlayerUpdated } from './../lobby/lobby.actions';
 import { Player } from '../player/interfaces/player.model'
 import {Action, createSelector, createFeatureSelector} from "@ngrx/store"
 import { PlayerActions, LoginSuccess, AckReady } from '../player/player.actions';
 import { PlayerDTO } from '../player/interfaces/player.interface';
 import { LobbyScreenActions, GotPlayers } from '../lobby/lobby.actions';
+import { timer, interval } from 'rxjs';
 
 
 export const coreStoreToken = "coreStoreToken"
@@ -11,9 +13,10 @@ export const coreStoreToken = "coreStoreToken"
 export interface CoreState {
   currentPlayer:Player | undefined;
   players: Player[] | undefined;
+  lobbyTimer:boolean;
 }
 
-export const coreReducer = (state:CoreState = {players:undefined,currentPlayer:undefined},action:Action):CoreState => {
+export const coreReducer = (state:CoreState = {players:undefined,currentPlayer:undefined,lobbyTimer:undefined},action:Action):CoreState => {
   switch(action.type) {
     case PlayerActions.LOGIN_SUCCESS: {
       const playerDto:PlayerDTO = (action as LoginSuccess).playerResponse 
@@ -45,6 +48,9 @@ export const coreReducer = (state:CoreState = {players:undefined,currentPlayer:u
         return {...currentState,players:newArray}
       }
     }
+    case LobbyScreenActions.AllPlayersReady: {
+      return {...state,lobbyTimer:true}
+    }
   }
   return state
 }
@@ -52,3 +58,11 @@ export const coreReducer = (state:CoreState = {players:undefined,currentPlayer:u
 export const getCoreState = createFeatureSelector(coreStoreToken);
 export const getCurrentPlayer = createSelector(getCoreState,(state:CoreState)=> state.currentPlayer)
 export const getLobbyPlayers = createSelector(getCoreState,(state:CoreState) => state.players)
+export const getAllPlayers = createSelector(getCoreState,(state:CoreState)=>{
+  if(state.players && state.players.length>0){
+  const allPlayers = [...state.players]
+  allPlayers.push(state.currentPlayer)
+  return allPlayers
+  }
+})
+export const getTimerState = createSelector(getCoreState,(state:CoreState)=>state.lobbyTimer)

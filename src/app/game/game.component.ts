@@ -7,11 +7,11 @@ import {
   AcNotification,
   ActionType,
   AcEntity,
+  CesiumEvent,
 } from 'angular-cesium';
 import {
   Subject,
   timer,
-  Event,
   interval,
   combineLatest,
   Observable,
@@ -30,6 +30,7 @@ export interface PlanePositionAndGyro {
   rotation: number;
   throttle:number;
   turnForce:number;
+  positions:any[];
 }
 
 @Component({
@@ -71,7 +72,8 @@ export class GameComponent implements OnInit {
       y: 0,
     },
     turnForce:2.2,
-    throttle:0
+    throttle:0,
+    positions:[]
   };
 
   constructor(private viewerConf: ViewerConfiguration) {
@@ -143,6 +145,8 @@ export class GameComponent implements OnInit {
       );
       this.PlaneController.position.x = newPosition.geometry.coordinates[0];
       this.PlaneController.position.y = newPosition.geometry.coordinates[1];
+      this.PlaneController.positions.push(Cesium.Cartesian3.fromDegrees(this.PlaneController.position.x,this.PlaneController.position.y,null))
+      this.PlaneController.positions=this.PlaneController.positions.slice(this.PlaneController.positions.length-1000,this.PlaneController.positions.length)
 
       this.planes$.next(
         new AcEntity({
@@ -158,6 +162,8 @@ export class GameComponent implements OnInit {
             rotation: -1 * degreesToRadians(this.PlaneController.rotation - 90),
             image: 'assets/images/plane.png',
             scale: 0.5,
+            material: Cesium.Material.fromType("Color"),
+            trail: this.PlaneController.positions
           },
         })
       );
