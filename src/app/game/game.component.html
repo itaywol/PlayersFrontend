@@ -1,1 +1,6 @@
-<p>game works!</p>
+<ac-map [flyTo]="flyToOptions">
+    <ac-map-layer-provider [provider]="map.provider" [options]="map.options"></ac-map-layer-provider>
+    <ac-layer acFor="let plane of planes$" [context]="this">
+        <ac-billboard-desc props="{image:plane.image,position:plane.position,rotation:plane.rotation,scale:plane.scale}"></ac-billboard-desc>
+    </ac-layer>
+</ac-map>

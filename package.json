@@ -23,6 +23,7 @@
     "@angular/router": "~9.1.9",
     "@ngrx/effects": "^9.1.2",
     "@ngrx/store": "^9.1.2",
+    "@turf/turf": "^5.1.6",
     "angular-cesium": "0.0.66",
     "angular-material": "^1.1.22",
     "apollo-angular": "^1.9.1",

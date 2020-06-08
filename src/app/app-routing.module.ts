@@ -1,3 +1,4 @@
+import { GameComponent } from './game/game.component';
 import { LobbyComponent } from './lobby/container/lobby.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'lobby', component: LobbyComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'game', component: GameComponent },
   { path: '', redirectTo: '/main-menu', pathMatch: 'full' },
 ];
 

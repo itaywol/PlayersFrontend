@@ -48,6 +48,7 @@ export class LobbyScreenEffects {
     }),
     map((subscriptionResult) => {
       return new PlayerUpdated(subscriptionResult.data.playerUpdated);
-    })
+    }),
+    
   ));
 }
